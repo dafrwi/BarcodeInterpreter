@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="arial"
-        android:text="00"
+        android:text="scanned code"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
