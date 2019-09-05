@@ -57,23 +57,21 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setPrompt("SCAN");
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
-
-
-            TextView scanResult = findViewById(R.id.codeView);
-            scanResult.setText("Code:    " + "AB01234567890");
         }
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-
+        TextView scanResult = findViewById(R.id.codeView);
         IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (Result != null) {
             if (Result.getContents() == null) {
                 Log.d("MainActivity", "cancelled scan");
                 Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
+
             } else {
                 Log.d("MainActivity", "Scanned");
-                Toast.makeText(this, "Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, "Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
+                scanResult.setText("Scanned Code: " + Result.getContents());
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
