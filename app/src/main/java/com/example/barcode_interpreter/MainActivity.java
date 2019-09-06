@@ -2,22 +2,15 @@ package com.example.barcode_interpreter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,39 +36,13 @@ public class MainActivity extends AppCompatActivity {
                 interpretCode();
             }
         });
-
-
     }
 
     private void scanCode() {
         // liest Barcode ein und zeigt das Resultat im codeView Fenster
-        final Activity activity = this;
-        IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-        intentIntegrator.setDesiredBarcodeFormats(intentIntegrator.ALL_CODE_TYPES);
-        intentIntegrator.setBeepEnabled(false);
-        intentIntegrator.setCameraId(0);
-        intentIntegrator.setPrompt("SCAN");
-        intentIntegrator.setBarcodeImageEnabled(false);
-        intentIntegrator.initiateScan();
-        }
 
-    @Override
-    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
         TextView scanResult = findViewById(R.id.codeView);
-        IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (Result != null) {
-            if (Result.getContents() == null) {
-                Log.d("MainActivity", "cancelled scan");
-                Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Log.d("MainActivity", "Scanned");
-               // Toast.makeText(this, "Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
-                scanResult.setText("Scanned Code: " + Result.getContents());
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
+        scanResult.setText("Code:    " + "AB01234567890");
     }
 
     private void interpretCode() {
