@@ -21,6 +21,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
+    TextView scanResult = findViewById(R.id.codeView);
 
     private ArrayAdapter adapter;
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-        TextView scanResult = findViewById(R.id.codeView);
+
         IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (Result != null) {
             if (Result.getContents() == null) {
@@ -85,13 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        String bcString=("11223344016324080128");
+        // String bcString=("11223344016324080128");
         /*  Beispiel-String mit folgendem Inhalt
             JobID:                  11223344
             Book bloc thickness     16.3
             Book bloc height        240.8
             Cut off length          12.8
          */
+        String bcString = (String)scanResult.getText();
 
         ArrayList<BcItem> template_1 = new ArrayList<>();
             BcItem item;
