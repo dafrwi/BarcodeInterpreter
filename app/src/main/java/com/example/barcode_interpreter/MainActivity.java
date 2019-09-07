@@ -57,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
 
-
-        TextView scanResult = findViewById(R.id.codeView);
-        scanResult.setText("Code:    " + "11223344016324080128");
+        // Dummy Daten als der Scanner noch nicht funktioniert hat
+        //TextView scanResult = findViewById(R.id.codeView);
+        //scanResult.setText("Code:    " + "11223344016324080128");
     }
 
     @Override
