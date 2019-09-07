@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         if (Result != null) {
             if (Result.getContents() == null) {
                 Log.d("MainActivity", "cancelled scan");
-                Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
+                scanResult.setText("Scanned Code: Scannen wurde abgebrochen");
 
             } else {
                 Log.d("MainActivity", "Scanned");
