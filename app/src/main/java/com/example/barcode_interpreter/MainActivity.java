@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,8 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
-    TextView scanResult = findViewById(R.id.codeView);
+
+    String bcString;
 
     private ArrayAdapter adapter;
 
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Button scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-
+        TextView scanResult = findViewById(R.id.codeView);
         IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (Result != null) {
             if (Result.getContents() == null) {
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("MainActivity", "Scanned");
                 // Toast.makeText(this, "Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
                 scanResult.setText("Scanned Code: " + Result.getContents());
+                bcString = (String)Result.getContents();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
@@ -86,24 +91,42 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        // String bcString=("11223344016324080128");
-        /*  Beispiel-String mit folgendem Inhalt
+        //String bcString=("11223344016324080128");
+        /* Beispiel-String mit folgendem Inhalt
             JobID:                  11223344
             Book bloc thickness     16.3
             Book bloc height        240.8
             Cut off length          12.8
          */
-        String bcString = (String)scanResult.getText();
+
+        // String bcString = (String)scanResult.getText();
+        // über Scanner eingelesener String übernehmen
+
+        // eingescannter Barcode aus ViewText auslesen
+        // TextView scanResult = findViewById(R.id.codeView);
+        // String bcString = (String) scanResult.getText();
 
         ArrayList<BcItem> template_1 = new ArrayList<>();
             BcItem item;
             item = new BcItem ("JobID", 1, 8, "");
             template_1.add(item);
-            item = new BcItem ("Book bloc thickness", 9, 4, "mm");
+            item = new BcItem ("Endsheet height", 9, 4, "mm");
             template_1.add(item);
-            item = new BcItem ("Book bloc height", 13, 4, "mm");
+            item = new BcItem ("Book bloc thickness", 13, 4, "mm");
             template_1.add(item);
-            item = new BcItem ("Cut Off Length", 17, 4, "mm");
+            item = new BcItem ("Book bloc height", 17, 4, "mm");
+            template_1.add(item);
+            item = new BcItem ("Cut Off Length", 21, 4, "mm");
+            template_1.add(item);
+            item = new BcItem ("Final Height", 25, 4, "mm");
+            template_1.add(item);
+            item = new BcItem ("Final Width", 29, 4, "mm");
+            template_1.add(item);
+            item = new BcItem ("Last sheet indicator", 33, 2, "");
+            template_1.add(item);
+            item = new BcItem ("Current sheet indicator", 35, 3, "");
+            template_1.add(item);
+            item = new BcItem ("Total sheets", 38, 3, "");
             template_1.add(item);
 
         ArrayList<BcContent> bcContentList = new ArrayList<>();
