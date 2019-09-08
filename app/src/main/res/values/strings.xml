@@ -1,3 +1,16 @@
 <resources>
+
     <string name="app_name">Barcode-Interpreter</string>
+    <string name="scan">scan</string>
+    <string name="interpret">Interpret</string>
+    <string name="code_template">Code-Template:</string>
+    <string name="scanned_code">scanned code</string>
+
+    <string-array name="code_templates">
+        <item>default</item>
+        <item>Vareo</item>
+        <item>InfiniTrim</item>
+        <item>Silhouet</item>
+    </string-array>
+
 </resources>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,6 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     String bcString;
-
     private ArrayAdapter adapter;
 
     @Override
@@ -33,6 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        Spinner spinner = findViewById(R.id.spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.code_templates, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner.setAdapter(adapter);
+
 
         Button scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -74,12 +84,10 @@ public class MainActivity extends AppCompatActivity {
         if (Result != null) {
             if (Result.getContents() == null) {
                 Log.d("MainActivity", "cancelled scan");
-                //Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
                 scanResult.setText("Scanned Code: Scannen wurde abgebrochen");
 
             } else {
                 Log.d("MainActivity", "Scanned");
-                // Toast.makeText(this, "Scanned -> " + Result.getContents(), Toast.LENGTH_SHORT).show();
                 scanResult.setText("Scanned Code: " + Result.getContents());
                 bcString = (String)Result.getContents();
             }
@@ -91,23 +99,30 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        //String bcString=("11223344016324080128");
-        /* Beispiel-String mit folgendem Inhalt
+        /*  Beispiel-String mit folgendem Inhalt
+            String bcString=("11223344016324080128");
+
+            Beispiel-Ausgabe
             JobID:                  11223344
             Book bloc thickness     16.3
             Book bloc height        240.8
             Cut off length          12.8
          */
 
-        // String bcString = (String)scanResult.getText();
-        // über Scanner eingelesener String übernehmen
+        //prüfung ob ein code gescannt wurde
+        if (bcString == null) {
+            TextView scanResult = findViewById(R.id.codeView);
+            Log.d("MainActivity", "cancelled scan");
+            //Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
+            scanResult.setText("es wurde kein code gescannt");
+            }
 
-        // eingescannter Barcode aus ViewText auslesen
-        // TextView scanResult = findViewById(R.id.codeView);
-        // String bcString = (String) scanResult.getText();
-
-        ArrayList<BcItem> template_1 = new ArrayList<>();
+        // Wenn win Code gescannt wurde wird hie weitergefahren
+        else {
+            ArrayList<BcItem> template_1 = new ArrayList<>();
+            ArrayList<BcContent> bcContentList;
             BcItem item;
+
             item = new BcItem ("JobID", 1, 8, "");
             template_1.add(item);
             item = new BcItem ("Endsheet height", 9, 4, "mm");
@@ -129,26 +144,26 @@ public class MainActivity extends AppCompatActivity {
             item = new BcItem ("Total sheets", 38, 3, "");
             template_1.add(item);
 
-        ArrayList<BcContent> bcContentList = new ArrayList<>();
 
-        bcContentList = interpretBC(bcString, template_1);
+            bcContentList = interpretBC(bcString, template_1);
 
-        adapter = new ArrayAdapter<BcContent>(this,
+            adapter = new ArrayAdapter<BcContent>(this,
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1, bcContentList){
 
                 @Override
-                public View getView(int position, View convertView, ViewGroup parent) {
-                    View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
-                    TextView textView1 = v.findViewById(R.id.textView_name);
-                    textView1.setText((CharSequence) getItem(position).contentName);
-                    TextView textView2 = v.findViewById(R.id.textView_value);
-                    textView2.setText((CharSequence) getItem(position).contentValue);
-                    TextView textView3 = v.findViewById(R.id.textView_dim);
-                    textView3.setText((CharSequence) getItem(position).contentDim);
-                    return v;
-                }
-        };
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
+                        TextView textView1 = v.findViewById(R.id.textView_name);
+                        textView1.setText((CharSequence) getItem(position).contentName);
+                        TextView textView2 = v.findViewById(R.id.textView_value);
+                        textView2.setText((CharSequence) getItem(position).contentValue);
+                        TextView textView3 = v.findViewById(R.id.textView_dim);
+                        textView3.setText((CharSequence) getItem(position).contentDim);
+                        return v;
+                    }
+                };
+        }
         ListView res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
     }

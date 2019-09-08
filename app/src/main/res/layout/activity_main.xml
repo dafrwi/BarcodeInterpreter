@@ -28,8 +28,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="arial"
-        android:text="scanned code"
-        android:textSize="12dp"
+        android:text="@string/scanned_code"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -58,15 +58,15 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="arial"
-        android:text="Code-Template: "
+        android:text="@string/code_template"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/codeView" />
 
-    <TextView
+   <!-- <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -78,6 +78,23 @@
         android:text="Silhouet"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/codeTemplate"
+        app:layout_constraintTop_toBottomOf="@+id/codeView" /> -->
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="sans-serif"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/codeTemplate"
@@ -113,7 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
-        android:text="scan"
+        android:text="@string/scan"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -128,12 +145,13 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Interpret"
+        android:text="@string/interpret"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/bt-scan" />
+        app:layout_constraintStart_toEndOf="@+id/bt-scan"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
