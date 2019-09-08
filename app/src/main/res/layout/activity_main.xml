@@ -120,12 +120,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/bt-scan"
+        app:layout_constraintBottom_toTopOf="@+id/bt_scan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bt-scan"
+        android:id="@+id/bt_scan"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -134,12 +134,12 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/bt-interpret"
+        app:layout_constraintEnd_toStartOf="@+id/bt_interpret"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/bt-interpret"
+        android:id="@+id/bt_interpret"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -151,7 +151,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/bt-scan"
+        app:layout_constraintStart_toEndOf="@+id/bt_scan"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

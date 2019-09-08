@@ -25,6 +25,7 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     String bcString;
+    Button scanButton, interpretButton;
     private ArrayAdapter adapter;
 
     @Override
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
 
 
-        Button scanButton = findViewById(R.id.bt_scan);
+        scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button interpretButton = findViewById(R.id.bt_interpret);
+        interpretButton = findViewById(R.id.bt_interpret);
         interpretButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
