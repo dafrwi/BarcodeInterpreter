@@ -114,9 +114,14 @@ public class MainActivity extends AppCompatActivity {
         if (bcString == null) {
             TextView scanResult = findViewById(R.id.codeView);
             Log.d("MainActivity", "cancelled scan");
-            //Toast.makeText(this, "cancelled", Toast.LENGTH_SHORT).show();
             scanResult.setText("es wurde kein code gescannt");
             }
+
+        if (bcString.length() != 40) {
+            TextView scanResult = findViewById(R.id.codeView);
+            Log.d("MainActivity", "cancelled scan");
+            scanResult.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
+        }
 
         // Wenn win Code gescannt wurde wird hie weitergefahren
         else {
