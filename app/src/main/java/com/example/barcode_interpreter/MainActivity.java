@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-    
+
     private void interpretCode() {
         ArrayList<BcItem> silhouet = CreateSilhouet();
         ArrayList<BcItem> vareo = CreateVareo();
@@ -212,9 +212,9 @@ public class MainActivity extends AppCompatActivity {
 
         item = new BcItem ("JobID", 1, 8, "");
         template_1.add(item);
-        item = new BcItem ("Book bloc thickness", 13, 4, "mm");
+        item = new BcItem ("Book bloc thickness", 9, 4, "mm");
         template_1.add(item);
-        item = new BcItem ("Book bloc height", 17, 4, "mm");
+        item = new BcItem ("Book bloc height", 13, 4, "mm");
         template_1.add(item);
 
         return template_1;
