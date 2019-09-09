@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
 
-
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +72,6 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
 
-        // Dummy Daten als der Scanner noch nicht funktioniert hat
-        //TextView scanResult = findViewById(R.id.codeView);
-        //scanResult.setText("Code:    " + "11223344016324080128");
     }
 
     @Override
@@ -96,19 +92,13 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
-
+    
     private void interpretCode() {
+        ArrayList<BcItem> silhouet = CreateSilhouet();
+        ArrayList<BcItem> vareo = CreateVareo();
+        ArrayList<BcItem> infiniTrim = CreateInfiniTrim();
 
-        /*  Beispiel-String mit folgendem Inhalt
-            String bcString=("11223344016324080128");
-
-            Beispiel-Ausgabe
-            JobID:                  11223344
-            Book bloc thickness     16.3
-            Book bloc height        240.8
-            Cut off length          12.8
-         */
+        // ArrayList<BcContent> bcContentList = null;
 
         //prüfung ob ein code gescannt wurde
         if (bcString == null) {
@@ -125,51 +115,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Wenn win Code gescannt wurde wird hie weitergefahren
         else {
-            ArrayList<BcItem> template_1 = new ArrayList<>();
             ArrayList<BcContent> bcContentList;
-            BcItem item;
-
-            item = new BcItem ("JobID", 1, 8, "");
-            template_1.add(item);
-            item = new BcItem ("Endsheet height", 9, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Book bloc thickness", 13, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Book bloc height", 17, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Cut Off Length", 21, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Final Height", 25, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Final Width", 29, 4, "mm");
-            template_1.add(item);
-            item = new BcItem ("Last sheet indicator", 33, 2, "");
-            template_1.add(item);
-            item = new BcItem ("Current sheet indicator", 35, 3, "");
-            template_1.add(item);
-            item = new BcItem ("Total sheets", 38, 3, "");
-            template_1.add(item);
-
-
-            bcContentList = interpretBC(bcString, template_1);
+            bcContentList = interpretBC(bcString, silhouet);
 
             adapter = new ArrayAdapter<BcContent>(this,
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1, bcContentList){
+            android.R.layout.simple_list_item_1,
+            android.R.id.text1, bcContentList){
 
                 @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
-                        TextView textView1 = v.findViewById(R.id.textView_name);
-                        textView1.setText((CharSequence) getItem(position).contentName);
-                        TextView textView2 = v.findViewById(R.id.textView_value);
-                        textView2.setText((CharSequence) getItem(position).contentValue);
-                        TextView textView3 = v.findViewById(R.id.textView_dim);
-                        textView3.setText((CharSequence) getItem(position).contentDim);
-                        return v;
-                    }
-                };
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
+                    TextView textView1 = v.findViewById(R.id.textView_name);
+                    textView1.setText((CharSequence) getItem(position).contentName);
+                    TextView textView2 = v.findViewById(R.id.textView_value);
+                    textView2.setText((CharSequence) getItem(position).contentValue);
+                    TextView textView3 = v.findViewById(R.id.textView_dim);
+                    textView3.setText((CharSequence) getItem(position).contentDim);
+                    return v;
+                }
+            };
         }
+
         ListView res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
     }
@@ -211,5 +177,60 @@ public class MainActivity extends AppCompatActivity {
             bcContentList.add(contentX);
         }
         return bcContentList;
+    }
+    private ArrayList<BcItem> CreateSilhouet() {
+        ArrayList<BcItem> template_1 = new ArrayList<>();
+        BcItem item;
+
+        item = new BcItem ("JobID", 1, 8, "");
+        template_1.add(item);
+        item = new BcItem ("Endsheet height", 9, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Book bloc thickness", 13, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Book bloc height", 17, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Cut Off Length", 21, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Final Height", 25, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Final Width", 29, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Last sheet indicator", 33, 2, "");
+        template_1.add(item);
+        item = new BcItem ("Current sheet indicator", 35, 3, "");
+        template_1.add(item);
+        item = new BcItem ("Total sheets", 38, 3, "");
+        template_1.add(item);
+
+        return template_1;
+    }
+
+    private ArrayList<BcItem> CreateVareo() {
+        ArrayList<BcItem> template_1 = new ArrayList<>();
+        BcItem item;
+
+        item = new BcItem ("JobID", 1, 8, "");
+        template_1.add(item);
+        item = new BcItem ("Book bloc thickness", 13, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Book bloc height", 17, 4, "mm");
+        template_1.add(item);
+
+        return template_1;
+    }
+
+    private ArrayList<BcItem> CreateInfiniTrim() {
+        ArrayList<BcItem> template_1 = new ArrayList<>();
+        BcItem item;
+
+        item = new BcItem ("Final format height", 1, 4, "");
+        template_1.add(item);
+        item = new BcItem ("Final format width", 5, 4, "mm");
+        template_1.add(item);
+        item = new BcItem ("Cut-off length", 9, 4, "mm");
+        template_1.add(item);
+
+        return template_1;
     }
 }
