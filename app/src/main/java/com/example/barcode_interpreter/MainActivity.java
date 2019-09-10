@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
-    Boolean checkOK = true;
+   // Boolean checkOK = false;
+    TextView errorText = findViewById(R.id.errorView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,49 +113,59 @@ public class MainActivity extends AppCompatActivity {
         if (bcString != null) {
 
             // Wenn der Code gescannt wurde wird hier weitergefahren
-            if (spinner.getSelectedItem().toString().equals("Silhouet") & bcString.length() == 40) {
+            if (spinner.getSelectedItem().toString().equals("Silhouet")) {
                 silhouet = template.CreateSilhouet();
 
-               // ArrayList<BcContent> bcContentList;
-                bcContentList = interpretBC(bcString, silhouet);
-                setAdapter();
+                // Check if Barcode and Template has the same length
+                Boolean templOK = checkBcTemplate (bcString, silhouet);
+
+                if (templOK == true) {
+                    bcContentList = interpretBC(bcString, silhouet);
+                    setAdapter();
+                }
+                else {
+                    setErrorText();
+                }
 
             }
 
             if (spinner.getSelectedItem().toString().equals("InfiniTrim") & bcString.length() == 12) {
                 infiniTrim = template.CreateInfiniTrim();
 
-               // ArrayList<BcContent> bcContentList;
+                // Check if Barcode and Template has the same length
+                Boolean templOK = checkBcTemplate (bcString, infiniTrim);
+
+                if (templOK == true) {
                 bcContentList = interpretBC(bcString, infiniTrim);
                 setAdapter();
+                }
+                else {
+                    setErrorText();
+                }
 
             }
 
             if (spinner.getSelectedItem().toString().equals("Vareo") & bcString.length() == 16) {
                 vareo = template.CreateVareo();
 
-              //  ArrayList<BcContent> bcContentList;
+                // Check if Barcode and Template has the same length
+                Boolean templOK = checkBcTemplate (bcString, vareo);
+
+                if (templOK == true) {
                 bcContentList = interpretBC(bcString, vareo);
                 setAdapter();
+            }
+                else {
+                    setErrorText();
+                }
 
             }
-
-            if (bcString.length() != 16 | bcString.length() != 40 | bcString.length() != 12) {
-                TextView errorText = findViewById(R.id.errorView);
-                errorText.setVisibility(View.VISIBLE);
-                errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
-            }
-
-
-
         }
-
         else {
             TextView errorText = findViewById(R.id.errorView);
             errorText.setVisibility(View.VISIBLE);
             errorText.setText("es wurde kein code gescannt");
         }
-
 
 
         ListView res = findViewById(R.id.result_list);
@@ -182,6 +193,11 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
+    }
+
+    private void setErrorText () {
+        errorText.setVisibility(View.VISIBLE);
+        errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
     }
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
