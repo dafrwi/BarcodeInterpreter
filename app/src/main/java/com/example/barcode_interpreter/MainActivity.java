@@ -24,8 +24,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
 
-    String bcString;
+    String bcString,codeTemplate;
     Button scanButton, interpretButton;
+    Spinner spinner;
     private ArrayAdapter adapter;
 
     @Override
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.code_templates, android.R.layout.simple_spinner_item);
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
+        codeTemplate = spinner.getSelectedItem().toString();
+
 
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -93,13 +96,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void interpretCode() {
-        ArrayList<BcItem> silhouet = CreateSilhouet();
-        ArrayList<BcItem> vareo = CreateVareo();
-        ArrayList<BcItem> infiniTrim = CreateInfiniTrim();
+
+        ArrayList<BcItem> vareo, infiniTrim, silhouet;
+
 
         // ArrayList<BcContent> bcContentList = null;
-
         //prüfung ob ein code gescannt wurde
         if (bcString == null) {
             TextView scanResult = findViewById(R.id.codeView);
@@ -107,20 +110,70 @@ public class MainActivity extends AppCompatActivity {
             scanResult.setText("es wurde kein code gescannt");
             }
 
-        if (bcString.length() != 40) {
+      /*  if (bcString.length() != 40) {
             TextView scanResult = findViewById(R.id.codeView);
             Log.d("MainActivity", "cancelled scan");
             scanResult.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
-        }
+        }*/
 
-        // Wenn win Code gescannt wurde wird hie weitergefahren
-        else {
+        // Wenn der Code gescannt wurde wird hier weitergefahren
+        if(spinner.getSelectedItem().toString().equals("Silhouet") & bcString.length() == 40) {
+            silhouet = CreateSilhouet();
+
             ArrayList<BcContent> bcContentList;
             bcContentList = interpretBC(bcString, silhouet);
 
             adapter = new ArrayAdapter<BcContent>(this,
             android.R.layout.simple_list_item_1,
             android.R.id.text1, bcContentList){
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
+                    TextView textView1 = v.findViewById(R.id.textView_name);
+                    textView1.setText((CharSequence) getItem(position).contentName);
+                    TextView textView2 = v.findViewById(R.id.textView_value);
+                    textView2.setText((CharSequence) getItem(position).contentValue);
+                    TextView textView3 = v.findViewById(R.id.textView_dim);
+                    textView3.setText((CharSequence) getItem(position).contentDim);
+                    return v;
+                }
+            };
+        }
+
+        if(spinner.getSelectedItem().toString().equals("InfiniTrim") & bcString.length() == 12) {
+            infiniTrim = CreateInfiniTrim();
+
+            ArrayList<BcContent> bcContentList;
+            bcContentList = interpretBC(bcString, infiniTrim);
+
+            adapter = new ArrayAdapter<BcContent>(this,
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1, bcContentList){
+
+                @Override
+                public View getView(int position, View convertView, ViewGroup parent) {
+                    View v = getLayoutInflater().inflate(R.layout.cell_layout,null);
+                    TextView textView1 = v.findViewById(R.id.textView_name);
+                    textView1.setText((CharSequence) getItem(position).contentName);
+                    TextView textView2 = v.findViewById(R.id.textView_value);
+                    textView2.setText((CharSequence) getItem(position).contentValue);
+                    TextView textView3 = v.findViewById(R.id.textView_dim);
+                    textView3.setText((CharSequence) getItem(position).contentDim);
+                    return v;
+                }
+            };
+        }
+
+        if(spinner.getSelectedItem().toString().equals("Vareo") & bcString.length() == 16) {
+            vareo = CreateVareo();
+
+            ArrayList<BcContent> bcContentList;
+            bcContentList = interpretBC(bcString, vareo);
+
+            adapter = new ArrayAdapter<BcContent>(this,
+                    android.R.layout.simple_list_item_1,
+                    android.R.id.text1, bcContentList){
 
                 @Override
                 public View getView(int position, View convertView, ViewGroup parent) {
@@ -178,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return bcContentList;
     }
+
     private ArrayList<BcItem> CreateSilhouet() {
         ArrayList<BcItem> template_1 = new ArrayList<>();
         BcItem item;
