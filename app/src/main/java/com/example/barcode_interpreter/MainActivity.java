@@ -26,7 +26,9 @@ public class MainActivity extends AppCompatActivity {
     String codeTemplate = null;
     Button scanButton, interpretButton;
     Spinner spinner;
-    private ArrayAdapter adapter;
+    ArrayAdapter adapter;
+    ArrayList<BcContent> bcContentList;
+    Boolean checkOK = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,58 +115,29 @@ public class MainActivity extends AppCompatActivity {
             if (spinner.getSelectedItem().toString().equals("Silhouet") & bcString.length() == 40) {
                 silhouet = template.CreateSilhouet();
 
-                ArrayList<BcContent> bcContentList;
+               // ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, silhouet);
+                setAdapter();
 
-                adapter = new ArrayAdapter<BcContent>(this,
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1, bcContentList) {
-
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View v = getLayoutInflater().inflate(R.layout.cell_layout, null);
-                        TextView textView1 = v.findViewById(R.id.textView_name);
-                        textView1.setText((CharSequence) getItem(position).contentName);
-                        TextView textView2 = v.findViewById(R.id.textView_value);
-                        textView2.setText((CharSequence) getItem(position).contentValue);
-                        TextView textView3 = v.findViewById(R.id.textView_dim);
-                        textView3.setText((CharSequence) getItem(position).contentDim);
-                        return v;
-                    }
-                };
             }
 
             if (spinner.getSelectedItem().toString().equals("InfiniTrim") & bcString.length() == 12) {
                 infiniTrim = template.CreateInfiniTrim();
 
-                ArrayList<BcContent> bcContentList;
+               // ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, infiniTrim);
+                setAdapter();
 
-                adapter = new ArrayAdapter<BcContent>(this,
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1, bcContentList) {
-
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View v = getLayoutInflater().inflate(R.layout.cell_layout, null);
-                        TextView textView1 = v.findViewById(R.id.textView_name);
-                        textView1.setText((CharSequence) getItem(position).contentName);
-                        TextView textView2 = v.findViewById(R.id.textView_value);
-                        textView2.setText((CharSequence) getItem(position).contentValue);
-                        TextView textView3 = v.findViewById(R.id.textView_dim);
-                        textView3.setText((CharSequence) getItem(position).contentDim);
-                        return v;
-                    }
-                };
             }
 
             if (spinner.getSelectedItem().toString().equals("Vareo") & bcString.length() == 16) {
                 vareo = template.CreateVareo();
 
-                ArrayList<BcContent> bcContentList;
+              //  ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, vareo);
+                setAdapter();
 
-                adapter = new ArrayAdapter<BcContent>(this,
+              /*  adapter = new ArrayAdapter<BcContent>(this,
                         android.R.layout.simple_list_item_1,
                         android.R.id.text1, bcContentList) {
 
@@ -179,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                         textView3.setText((CharSequence) getItem(position).contentDim);
                         return v;
                     }
-                };
+                }; */
             }
 
             if (bcString.length() != 16 | bcString.length() != 40 | bcString.length() != 12) {
@@ -187,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
                 errorText.setVisibility(View.VISIBLE);
                 errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
             }
+
+
+
         }
 
         else {
@@ -196,8 +172,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
         ListView res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
+    }
+
+
+    private void setAdapter (){
+
+        adapter = new ArrayAdapter<BcContent>(this,
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1, bcContentList) {
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = getLayoutInflater().inflate(R.layout.cell_layout, null);
+                TextView textView1 = v.findViewById(R.id.textView_name);
+                textView1.setText((CharSequence) getItem(position).contentName);
+                TextView textView2 = v.findViewById(R.id.textView_value);
+                textView2.setText((CharSequence) getItem(position).contentValue);
+                TextView textView3 = v.findViewById(R.id.textView_dim);
+                textView3.setText((CharSequence) getItem(position).contentDim);
+                return v;
+            }
+        };
+
+
     }
 
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
