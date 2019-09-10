@@ -229,6 +229,11 @@ public class MainActivity extends AppCompatActivity {
 
                 if (value2.charAt(0) == '0') {
                     value2 = value2.substring(1,5);
+
+                    // ev. 2te führende 0 entfernen
+                    if (value2.charAt(0) == '0') {
+                        value2 = value2.substring(1,4);
+                    }
                 }
             } else {
                 value2 = value;
