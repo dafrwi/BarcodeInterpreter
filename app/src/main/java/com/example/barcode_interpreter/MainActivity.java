@@ -200,6 +200,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
+        String bcString = bcStr;
+        ArrayList<BcItem> template = templ;
+
+        Boolean checkOK= false;
+
+        Integer anzItem = template.size();
+        BcItem lastItem = templ.get(anzItem-1);
+
+        if (bcStr.length() == (lastItem.itemStartBit + lastItem.itemAnzStellen - 1)) {
+            checkOK = true;
+        }
+        return checkOK;
+    }
+
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
         String bcString = bcStr;
         ArrayList<BcItem> template = templ;
@@ -239,59 +254,4 @@ public class MainActivity extends AppCompatActivity {
         return bcContentList;
     }
 
-   /* private ArrayList<BcItem> CreateSilhouet() {
-        ArrayList<BcItem> template_1 = new ArrayList<>();
-        BcItem item;
-
-        item = new BcItem ("JobID", 1, 8, "");
-        template_1.add(item);
-        item = new BcItem ("Endsheet height", 9, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Book bloc thickness", 13, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Book bloc height", 17, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Cut Off Length", 21, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Final Height", 25, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Final Width", 29, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Last sheet indicator", 33, 2, "");
-        template_1.add(item);
-        item = new BcItem ("Current sheet indicator", 35, 3, "");
-        template_1.add(item);
-        item = new BcItem ("Total sheets", 38, 3, "");
-        template_1.add(item);
-
-        return template_1;
-    }*/
-
-   /* private ArrayList<BcItem> CreateVareo() {
-        ArrayList<BcItem> template_1 = new ArrayList<>();
-        BcItem item;
-
-        item = new BcItem ("JobID", 1, 8, "");
-        template_1.add(item);
-        item = new BcItem ("Book bloc thickness", 9, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Book bloc height", 13, 4, "mm");
-        template_1.add(item);
-
-        return template_1;
-    }*/
-
-   /* private ArrayList<BcItem> CreateInfiniTrim() {
-        ArrayList<BcItem> template_1 = new ArrayList<>();
-        BcItem item;
-
-        item = new BcItem ("Final format height", 1, 4, "");
-        template_1.add(item);
-        item = new BcItem ("Final format width", 5, 4, "mm");
-        template_1.add(item);
-        item = new BcItem ("Cut-off length", 9, 4, "mm");
-        template_1.add(item);
-
-        return template_1;
-    }*/
 }
