@@ -14,10 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -101,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void interpretCode() {
 
         ArrayList<BcItem> vareo, infiniTrim, silhouet;
+        CreateTemplate template = new CreateTemplate();
 
         TextView cleanErrorText = findViewById(R.id.errorView);
         cleanErrorText.setVisibility(View.INVISIBLE);
@@ -112,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Wenn der Code gescannt wurde wird hier weitergefahren
             if (spinner.getSelectedItem().toString().equals("Silhouet") & bcString.length() == 40) {
-               silhouet = CreateSilhouet();
+                silhouet = template.CreateSilhouet();
 
                 ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, silhouet);
@@ -136,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (spinner.getSelectedItem().toString().equals("InfiniTrim") & bcString.length() == 12) {
-                infiniTrim = CreateInfiniTrim();
+                infiniTrim = template.CreateInfiniTrim();
 
                 ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, infiniTrim);
@@ -160,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             if (spinner.getSelectedItem().toString().equals("Vareo") & bcString.length() == 16) {
-                vareo = CreateVareo();
+                vareo = template.CreateVareo();
 
                 ArrayList<BcContent> bcContentList;
                 bcContentList = interpretBC(bcString, vareo);
@@ -240,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
         return bcContentList;
     }
 
-    private ArrayList<BcItem> CreateSilhouet() {
+   /* private ArrayList<BcItem> CreateSilhouet() {
         ArrayList<BcItem> template_1 = new ArrayList<>();
         BcItem item;
 
@@ -266,9 +265,9 @@ public class MainActivity extends AppCompatActivity {
         template_1.add(item);
 
         return template_1;
-    }
+    }*/
 
-    private ArrayList<BcItem> CreateVareo() {
+   /* private ArrayList<BcItem> CreateVareo() {
         ArrayList<BcItem> template_1 = new ArrayList<>();
         BcItem item;
 
@@ -280,9 +279,9 @@ public class MainActivity extends AppCompatActivity {
         template_1.add(item);
 
         return template_1;
-    }
+    }*/
 
-    private ArrayList<BcItem> CreateInfiniTrim() {
+   /* private ArrayList<BcItem> CreateInfiniTrim() {
         ArrayList<BcItem> template_1 = new ArrayList<>();
         BcItem item;
 
@@ -294,5 +293,5 @@ public class MainActivity extends AppCompatActivity {
         template_1.add(item);
 
         return template_1;
-    }
+    }*/
 }
