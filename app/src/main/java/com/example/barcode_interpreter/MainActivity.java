@@ -137,22 +137,6 @@ public class MainActivity extends AppCompatActivity {
                 bcContentList = interpretBC(bcString, vareo);
                 setAdapter();
 
-              /*  adapter = new ArrayAdapter<BcContent>(this,
-                        android.R.layout.simple_list_item_1,
-                        android.R.id.text1, bcContentList) {
-
-                    @Override
-                    public View getView(int position, View convertView, ViewGroup parent) {
-                        View v = getLayoutInflater().inflate(R.layout.cell_layout, null);
-                        TextView textView1 = v.findViewById(R.id.textView_name);
-                        textView1.setText((CharSequence) getItem(position).contentName);
-                        TextView textView2 = v.findViewById(R.id.textView_value);
-                        textView2.setText((CharSequence) getItem(position).contentValue);
-                        TextView textView3 = v.findViewById(R.id.textView_dim);
-                        textView3.setText((CharSequence) getItem(position).contentDim);
-                        return v;
-                    }
-                }; */
             }
 
             if (bcString.length() != 16 | bcString.length() != 40 | bcString.length() != 12) {
@@ -214,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return checkOK;
     }
+
 
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
         String bcString = bcStr;
