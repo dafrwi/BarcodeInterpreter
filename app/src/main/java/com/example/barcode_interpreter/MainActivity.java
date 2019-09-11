@@ -79,22 +79,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+    protected void onActivityResult ( int requestCode, int resultCode, Intent data) {
         TextView scanResult = findViewById(R.id.codeView);
         IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (Result != null) {
             if (Result.getContents() == null) {
                 Log.d("MainActivity", "cancelled scan");
                 scanResult.setText("Scanned Code: Scannen wurde abgebrochen");
-
             } else {
                 Log.d("MainActivity", "Scanned");
                 scanResult.setText("Scanned Code: " + Result.getContents());
-                bcString = (String)Result.getContents();
+                bcString = (String) Result.getContents();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+        TextView errorText = findViewById(R.id.errorView);
     }
 
 
@@ -124,27 +124,31 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     setErrorText();
+                    bcContentList = EmptyContentList();
+                    setAdapter();
                 }
 
             }
 
-            if (spinner.getSelectedItem().toString().equals("InfiniTrim") & bcString.length() == 12) {
+            if (spinner.getSelectedItem().toString().equals("InfiniTrim")) {
                 infiniTrim = template.CreateInfiniTrim();
 
                 // Check if Barcode and Template has the same length
                 Boolean templOK = checkBcTemplate (bcString, infiniTrim);
 
                 if (templOK == true) {
-                bcContentList = interpretBC(bcString, infiniTrim);
-                setAdapter();
+                    bcContentList = interpretBC(bcString, infiniTrim);
+                    setAdapter();
                 }
                 else {
                     setErrorText();
+                    bcContentList = EmptyContentList();
+                    setAdapter();
                 }
 
             }
 
-            if (spinner.getSelectedItem().toString().equals("Vareo") & bcString.length() == 16) {
+            if (spinner.getSelectedItem().toString().equals("Vareo") ) {
                 vareo = template.CreateVareo();
 
                 // Check if Barcode and Template has the same length
@@ -156,6 +160,8 @@ public class MainActivity extends AppCompatActivity {
             }
                 else {
                     setErrorText();
+                    bcContentList = EmptyContentList();
+                    setAdapter();
                 }
 
             }
@@ -165,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
             errorText.setVisibility(View.VISIBLE);
             errorText.setText("es wurde kein code gescannt");
         }
-
 
         ListView res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
@@ -254,6 +259,15 @@ public class MainActivity extends AppCompatActivity {
             contentX.contentValue = value2;
             bcContentList.add(contentX);
         }
+        return bcContentList;
+    }
+
+    private ArrayList<BcContent> EmptyContentList(){
+        ArrayList<BcContent> bcContentList = new ArrayList<>();
+        BcContent contentX = new BcContent("","","");
+
+        bcContentList.add(contentX);
+
         return bcContentList;
     }
 

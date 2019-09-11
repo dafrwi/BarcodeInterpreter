@@ -66,7 +66,7 @@ public class CreateTemplate {
         ArrayList<BcItem> template_InfiniTrim = new ArrayList<>();
         BcItem item;
 
-        item = new BcItem ("Final format height", 1, 4, "");
+        item = new BcItem ("Final format height", 1, 4, "mm");
         template_InfiniTrim.add(item);
         item = new BcItem ("Final format width", 5, 4, "mm");
         template_InfiniTrim.add(item);
