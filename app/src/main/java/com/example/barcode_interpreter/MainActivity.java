@@ -22,14 +22,14 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
 
-    String bcString = null;
-    String codeTemplate = null;
+    String bcString;
+    String codeTemplate;
     Button scanButton, interpretButton;
     Spinner spinner;
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
    // Boolean checkOK = false;
-    TextView errorText = findViewById(R.id.errorView);
+   // TextView errorText = findViewById(R.id.errorView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         codeTemplate = spinner.getSelectedItem().toString();
-
 
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -192,12 +191,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-
     }
 
     private void setErrorText () {
-        errorText.setVisibility(View.VISIBLE);
-        errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
+        // errorText.setVisibility(View.VISIBLE);
+        // errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
     }
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
@@ -214,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return checkOK;
     }
-
 
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
         String bcString = bcStr;
