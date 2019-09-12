@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
+    ListView res;
     //TextView scanResult;
     TextView errorText;
    // Boolean checkOK = false;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 scanCode();
@@ -99,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
-
 
     private void interpretCode() {
 
@@ -157,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, vareo);
                     setAdapter();
-            }
+                }
                 else {
                     noTemplateMatch();
                     bcContentList = EmptyContentList();
@@ -171,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
             errorText.setText(R.string.noCode_scanned);
         }
 
-        ListView res = findViewById(R.id.result_list);
+        res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
     }
 
