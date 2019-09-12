@@ -28,8 +28,9 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
+    //TextView scanResult;
+    TextView errorText;
    // Boolean checkOK = false;
-   // TextView errorText = findViewById(R.id.errorView);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,20 +82,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult ( int requestCode, int resultCode, Intent data) {
         TextView scanResult = findViewById(R.id.codeView);
+        errorText = findViewById(R.id.errorView);
         IntentResult Result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+
         if (Result != null) {
             if (Result.getContents() == null) {
                 Log.d("MainActivity", "cancelled scan");
-                scanResult.setText("Scanned Code: Scannen wurde abgebrochen");
+                errorText.setVisibility(View.VISIBLE);
+                errorText.setText(R.string.scan_cancelled);
             } else {
                 Log.d("MainActivity", "Scanned");
                 scanResult.setText("Scanned Code: " + Result.getContents());
-                bcString = (String) Result.getContents();
+                bcString = Result.getContents();
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
-        TextView errorText = findViewById(R.id.errorView);
     }
 
 
@@ -102,10 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<BcItem> vareo, infiniTrim, silhouet;
         CreateTemplate template = new CreateTemplate();
-
-        TextView cleanErrorText = findViewById(R.id.errorView);
-        cleanErrorText.setVisibility(View.INVISIBLE);
-        cleanErrorText.setText("");
 
         // ArrayList<BcContent> bcContentList = null;
         //prüfung ob ein code gescannt wurde
@@ -119,15 +118,15 @@ public class MainActivity extends AppCompatActivity {
                 Boolean templOK = checkBcTemplate (bcString, silhouet);
 
                 if (templOK == true) {
+                    errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, silhouet);
                     setAdapter();
                 }
                 else {
-                    setErrorText();
+                    noTemplateMatch();
                     bcContentList = EmptyContentList();
                     setAdapter();
                 }
-
             }
 
             if (spinner.getSelectedItem().toString().equals("InfiniTrim")) {
@@ -137,39 +136,39 @@ public class MainActivity extends AppCompatActivity {
                 Boolean templOK = checkBcTemplate (bcString, infiniTrim);
 
                 if (templOK == true) {
+                    errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, infiniTrim);
                     setAdapter();
                 }
                 else {
-                    setErrorText();
+                    noTemplateMatch();
                     bcContentList = EmptyContentList();
                     setAdapter();
                 }
-
             }
 
-            if (spinner.getSelectedItem().toString().equals("Vareo") ) {
+            if (spinner.getSelectedItem().toString().equals("Vareo")) {
                 vareo = template.CreateVareo();
 
                 // Check if Barcode and Template has the same length
                 Boolean templOK = checkBcTemplate (bcString, vareo);
 
                 if (templOK == true) {
-                bcContentList = interpretBC(bcString, vareo);
-                setAdapter();
+                    errorText.setVisibility(View.INVISIBLE);
+                    bcContentList = interpretBC(bcString, vareo);
+                    setAdapter();
             }
                 else {
-                    setErrorText();
+                    noTemplateMatch();
                     bcContentList = EmptyContentList();
                     setAdapter();
                 }
-
             }
         }
         else {
-            TextView errorText = findViewById(R.id.errorView);
+            errorText = findViewById(R.id.errorView);
             errorText.setVisibility(View.VISIBLE);
-            errorText.setText("es wurde kein code gescannt");
+            errorText.setText(R.string.noCode_scanned);
         }
 
         ListView res = findViewById(R.id.result_list);
@@ -198,9 +197,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setErrorText () {
-        // errorText.setVisibility(View.VISIBLE);
-        // errorText.setText("es handelt sich um einen code der nicht mit diesem Template übereinstimmt");
+    private void noTemplateMatch () {
+         errorText = findViewById(R.id.errorView);
+         errorText.setVisibility(View.VISIBLE);
+         errorText.setText(R.string.noTemplate_match);
     }
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
