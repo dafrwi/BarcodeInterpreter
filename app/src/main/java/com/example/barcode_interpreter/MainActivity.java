@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(adapter);
         codeTemplate = spinner.getSelectedItem().toString();
+        // setAdapter();
 
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<BcItem> vareo, infiniTrim, silhouet;
         CreateTemplate template = new CreateTemplate();
-
+        setAdapter();
         // ArrayList<BcContent> bcContentList = null;
         //prüfung ob ein code gescannt wurde
         if (bcString != null) {
@@ -119,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, silhouet);
-                    setAdapter();
+                    // setAdapter();
                 }
                 else {
                     res.setEmptyView(res);
                     noTemplateMatch();
-                    bcContentList = EmptyContentList();
-                    setAdapter();
+                    bcContentList.clear();
+                    // setAdapter();
                 }
             }
 
@@ -138,12 +139,12 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, infiniTrim);
-                    setAdapter();
+                    // setAdapter();
                 }
                 else {
                     noTemplateMatch();
-                    bcContentList = EmptyContentList();
-                    setAdapter();
+                    bcContentList.clear();
+                    // setAdapter();
                 }
             }
 
@@ -156,12 +157,13 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, vareo);
-                    setAdapter();
+                    // setAdapter();
                 }
                 else {
                     noTemplateMatch();
-                    bcContentList = EmptyContentList();
-                    setAdapter();
+                    // bcContentList = EmptyContentList();
+                    bcContentList.clear();
+                    // setAdapter();
                 }
             }
         }
