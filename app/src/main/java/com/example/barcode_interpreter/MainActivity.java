@@ -29,9 +29,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
     ListView res;
-    //TextView scanResult;
     TextView errorText;
-   // Boolean checkOK = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                     setAdapter();
                 }
                 else {
+                    res.setEmptyView(res);
                     noTemplateMatch();
                     bcContentList = EmptyContentList();
                     setAdapter();
