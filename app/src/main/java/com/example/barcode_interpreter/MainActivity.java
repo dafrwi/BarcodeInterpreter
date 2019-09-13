@@ -266,7 +266,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<BcContent> bcContentList = new ArrayList<>();
         BcContent contentX = new BcContent("","","");
 
-        bcContentList.add(contentX);
+        // bcContentList.add(contentX);
 
         return bcContentList;
     }
