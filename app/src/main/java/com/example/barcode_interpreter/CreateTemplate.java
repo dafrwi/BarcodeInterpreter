@@ -19,6 +19,14 @@ public class CreateTemplate {
 
     }
 
+  protected static ArrayList<BcContent> CreateInitial(){
+        ArrayList<BcContent> initial_bcContentList = new ArrayList<>();
+        BcContent contentX = new BcContent("","","");
+
+        // bcContentList.add(contentX);
+
+        return initial_bcContentList;
+    }
 
     protected ArrayList<BcItem> CreateSilhouet() {
         ArrayList<BcItem> template_Silhouet = new ArrayList<>();

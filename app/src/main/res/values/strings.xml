@@ -9,8 +9,8 @@
 
     <!-- error strings -->
     <string name="scan_cancelled">Scannen wurde abgebrochen</string>
-    <string name="noCode_scanned">es wurde kein code gescannt</string>
-    <string name="noTemplate_match">es handelt sich um einen code der nicht mit diesem Template übereinstimmt</string>
+    <string name="noCode_scanned">es wurde kein Code gescannt</string>
+    <string name="noTemplate_match">es handelt sich um einen Code, der nicht mit diesem Template übereinstimmt</string>
 
 
 

@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Button scanButton, interpretButton;
     Spinner spinner;
     ArrayAdapter adapter;
-    ArrayList<BcContent> bcContentList;
+    ArrayList<BcContent> bcContentList = CreateTemplate.CreateInitial();
     ListView res;
     TextView errorText;
 
@@ -40,15 +40,14 @@ public class MainActivity extends AppCompatActivity {
 
         spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.code_templates, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-        codeTemplate = spinner.getSelectedItem().toString();
-        // setAdapter();
+        spinner.setAdapter(spinnerAdapter);
 
+        codeTemplate = spinner.getSelectedItem().toString();
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<BcItem> vareo, infiniTrim, silhouet;
         CreateTemplate template = new CreateTemplate();
-        setAdapter();
         // ArrayList<BcContent> bcContentList = null;
         //prüfung ob ein code gescannt wurde
         if (bcString != null) {
@@ -120,13 +118,13 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, silhouet);
-                    // setAdapter();
+                    setAdapter();
                 }
                 else {
                     res.setEmptyView(res);
                     noTemplateMatch();
                     bcContentList.clear();
-                    // setAdapter();
+                     setAdapter();
                 }
             }
 
@@ -139,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, infiniTrim);
-                    // setAdapter();
+                    setAdapter();
                 }
                 else {
                     noTemplateMatch();
                     bcContentList.clear();
-                    // setAdapter();
+                    setAdapter();
                 }
             }
 
@@ -157,13 +155,13 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, vareo);
-                    // setAdapter();
+                    setAdapter();
                 }
                 else {
                     noTemplateMatch();
                     // bcContentList = EmptyContentList();
                     bcContentList.clear();
-                    // setAdapter();
+                    setAdapter();
                 }
             }
         }
@@ -196,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
                 return v;
             }
         };
-
     }
 
     private void noTemplateMatch () {
@@ -264,13 +261,6 @@ public class MainActivity extends AppCompatActivity {
         return bcContentList;
     }
 
-    private ArrayList<BcContent> EmptyContentList(){
-        ArrayList<BcContent> bcContentList = new ArrayList<>();
-        BcContent contentX = new BcContent("","","");
 
-        // bcContentList.add(contentX);
-
-        return bcContentList;
-    }
 
 }
