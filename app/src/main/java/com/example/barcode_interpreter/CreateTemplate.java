@@ -19,13 +19,13 @@ public class CreateTemplate {
 
     }
 
-  protected static ArrayList<BcContent> CreateInitial(){
-        ArrayList<BcContent> initial_bcContentList = new ArrayList<>();
+    protected ArrayList<BcContent> CreateInitial(){
+        ArrayList<BcContent> bcContentList = new ArrayList<>();
         BcContent contentX = new BcContent("","","");
 
-        // bcContentList.add(contentX);
+       // bcContentList.add(contentX);
 
-        return initial_bcContentList;
+        return bcContentList;
     }
 
     protected ArrayList<BcItem> CreateSilhouet() {

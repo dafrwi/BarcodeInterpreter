@@ -27,9 +27,11 @@ public class MainActivity extends AppCompatActivity {
     Button scanButton, interpretButton;
     Spinner spinner;
     ArrayAdapter adapter;
-    ArrayList<BcContent> bcContentList = CreateTemplate.CreateInitial();
+    ArrayList<BcContent> bcContentList;
     ListView res;
     TextView errorText;
+    ArrayList<BcItem> vareo, infiniTrim, silhouet;
+    CreateTemplate template = new CreateTemplate();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        bcContentList = new CreateTemplate().CreateInitial();
+        //setAdapter();
 
         spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -102,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        ArrayList<BcItem> vareo, infiniTrim, silhouet;
-        CreateTemplate template = new CreateTemplate();
         // ArrayList<BcContent> bcContentList = null;
         //prüfung ob ein code gescannt wurde
         if (bcString != null) {
@@ -118,13 +121,10 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, silhouet);
-                    setAdapter();
                 }
                 else {
-                    res.setEmptyView(res);
                     noTemplateMatch();
                     bcContentList.clear();
-                     setAdapter();
                 }
             }
 
@@ -137,12 +137,10 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, infiniTrim);
-                    setAdapter();
                 }
                 else {
                     noTemplateMatch();
                     bcContentList.clear();
-                    setAdapter();
                 }
             }
 
@@ -155,13 +153,10 @@ public class MainActivity extends AppCompatActivity {
                 if (templOK == true) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, vareo);
-                    setAdapter();
                 }
                 else {
                     noTemplateMatch();
-                    // bcContentList = EmptyContentList();
                     bcContentList.clear();
-                    setAdapter();
                 }
             }
         }
@@ -171,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
             errorText.setText(R.string.noCode_scanned);
         }
 
+        //adapter.notifyDataSetChanged();
+        setAdapter();
         res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
     }
