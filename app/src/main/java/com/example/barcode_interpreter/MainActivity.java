@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinner.setAdapter(spinnerAdapter);
 
+
         codeTemplate = spinner.getSelectedItem().toString();
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
