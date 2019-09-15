@@ -28,6 +28,22 @@ public class CreateTemplate {
         return bcContentList;
     }
 
+    protected ArrayList<BcItem> CreateDefault() {
+        ArrayList<BcItem> template_default = new ArrayList<>();
+        BcItem item;
+
+        item = new BcItem ("JobID", 1, 8, "");
+        template_default.add(item);
+        item = new BcItem ("Book bloc thickness", 9, 4, "mm");
+        template_default.add(item);
+        item = new BcItem ("Book bloc height", 13, 4, "mm");
+        template_default.add(item);
+        item = new BcItem ("Cut-off length", 17, 4, "mm");
+        template_default.add(item);
+
+        return template_default;
+    }
+
     protected ArrayList<BcItem> CreateSilhouet() {
         ArrayList<BcItem> template_Silhouet = new ArrayList<>();
         BcItem item;

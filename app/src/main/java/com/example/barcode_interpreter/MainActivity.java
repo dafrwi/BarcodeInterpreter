@@ -23,14 +23,13 @@ import com.google.zxing.integration.android.IntentResult;
 public class MainActivity extends AppCompatActivity {
 
     String bcString;
-    String codeTemplate;
     Button scanButton, interpretButton;
     Spinner spinner;
     ArrayAdapter adapter;
     ArrayList<BcContent> bcContentList;
     ListView res;
     TextView errorText;
-    ArrayList<BcItem> vareo, infiniTrim, silhouet;
+    ArrayList<BcItem> selectedTmplate;
     CreateTemplate template = new CreateTemplate();
 
     @Override
@@ -40,20 +39,19 @@ public class MainActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        // create an initial Template that it is not NULL
         bcContentList = new CreateTemplate().CreateInitial();
-        //setAdapter();
 
+        //
         spinner = findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.code_templates, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
+        // Apply the spinnerAdapter to the spinner
         spinner.setAdapter(spinnerAdapter);
 
-
-        codeTemplate = spinner.getSelectedItem().toString();
         scanButton = findViewById(R.id.bt_scan);
         scanButton.setOnClickListener(new View.OnClickListener() {
 
@@ -73,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void scanCode() {
-        // liest Barcode ein und zeigt das Resultat im codeView Fenster
         final Activity activity = this;
         IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
         intentIntegrator.setDesiredBarcodeFormats(intentIntegrator.ALL_CODE_TYPES);
@@ -82,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setPrompt("SCAN");
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
-
     }
 
     @Override
@@ -93,11 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (Result != null) {
             if (Result.getContents() == null) {
-                Log.d("MainActivity", "cancelled scan");
                 errorText.setVisibility(View.VISIBLE);
                 errorText.setText(R.string.scan_cancelled);
             } else {
-                Log.d("MainActivity", "Scanned");
                 scanResult.setText("Scanned Code: " + Result.getContents());
                 bcString = Result.getContents();
             }
@@ -108,9 +102,39 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        // ArrayList<BcContent> bcContentList = null;
-        //prüfung ob ein code gescannt wurde
+        //check if a barcode is scanned
         if (bcString != null) {
+
+            switch(spinner.getSelectedItem().toString()) {
+                case "Silhouet":
+                    selectedTmplate = template.CreateSilhouet();
+                    break;
+                case "InfiniTrim":
+                    selectedTmplate = template.CreateInfiniTrim();
+                    break;
+                case "Vareo":
+                    selectedTmplate = template.CreateVareo();
+                    break;
+                default:
+                    selectedTmplate = template.CreateDefault();
+            }
+                // Check if Barcode and Template has the same length
+                Boolean templOK = checkBcTemplate (bcString, selectedTmplate);
+
+                if (templOK == true) {
+                    errorText.setVisibility(View.INVISIBLE);
+                    bcContentList = interpretBC(bcString, selectedTmplate);
+                }
+                else {
+                    //noTemplateMatch();
+                    errorText = findViewById(R.id.errorView);
+                    errorText.setVisibility(View.VISIBLE);
+                    errorText.setText(R.string.noTemplate_match);
+                    bcContentList.clear();
+                }
+        }
+
+       /* if (bcString != null) {
 
             // Wenn der Code gescannt wurde wird hier weitergefahren
             if (spinner.getSelectedItem().toString().equals("Silhouet")) {
@@ -160,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
                     bcContentList.clear();
                 }
             }
-        }
+        } */
+
         else {
             errorText = findViewById(R.id.errorView);
             errorText.setVisibility(View.VISIBLE);
@@ -194,11 +219,11 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void noTemplateMatch () {
+ /*   private void noTemplateMatch () {
          errorText = findViewById(R.id.errorView);
          errorText.setVisibility(View.VISIBLE);
          errorText.setText(R.string.noTemplate_match);
-    }
+    }*/
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
         String bcString = bcStr;
@@ -258,7 +283,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return bcContentList;
     }
-
-
 
 }
