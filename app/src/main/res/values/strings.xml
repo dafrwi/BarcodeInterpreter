@@ -20,6 +20,9 @@
         <item>Vareo</item>
         <item>InfiniTrim</item>
         <item>Silhouet</item>
+        <item>ExaktaVareo</item>
+        <item>ExaktaVareoCover</item>
+        <item>ExaktaPrimera</item>
     </string-array>
 
 </resources>

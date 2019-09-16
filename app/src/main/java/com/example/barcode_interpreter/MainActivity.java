@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         //check if a barcode is scanned
         if (bcString != null) {
-
+            String select = spinner.getSelectedItem().toString();
             switch(spinner.getSelectedItem().toString()) {
                 case "Silhouet":
                     selectedTmplate = template.CreateSilhouet();
@@ -114,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case "Vareo":
                     selectedTmplate = template.CreateVareo();
+                    break;
+                case "ExaktaVareo":
+                    selectedTmplate = template.CreateExaktaVareo();
+                    break;
+                case "ExaktaVareoCover":
+                    selectedTmplate = template.CreateExaktaVareoCover();
+                    break;
+                case "ExaktaPrimera":
+                    selectedTmplate = template.CreateExaktaPrimera();
                     break;
                 default:
                     selectedTmplate = template.CreateDefault();
@@ -233,6 +242,8 @@ public class MainActivity extends AppCompatActivity {
 
         Integer anzItem = template.size();
         BcItem lastItem = templ.get(anzItem-1);
+        int bclength = bcStr.length();
+        int templength = (lastItem.itemStartBit + lastItem.itemAnzStellen - 1);
 
         if (bcStr.length() == (lastItem.itemStartBit + lastItem.itemAnzStellen - 1)) {
             checkOK = true;
