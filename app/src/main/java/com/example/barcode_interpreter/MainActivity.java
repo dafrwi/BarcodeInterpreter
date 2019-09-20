@@ -39,17 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        // create an initial Template that it is not NULL
+        /* create an initial Template that it is not NULL */
         bcContentList = new CreateTemplate().CreateInitial();
 
         //
         spinner = findViewById(R.id.spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
+        /* Create an ArrayAdapter using the string array and a default spinner layout */
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.code_templates, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
+        /* Specify the layout to use when the list of choices appears */
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the spinnerAdapter to the spinner
+        /* Apply the spinnerAdapter to the spinner */
         spinner.setAdapter(spinnerAdapter);
 
         scanButton = findViewById(R.id.bt_scan);
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void interpretCode() {
 
-        //check if a barcode is scanned
+        /* check if a barcode is scanned */
         if (bcString != null) {
             String select = spinner.getSelectedItem().toString();
             switch(spinner.getSelectedItem().toString()) {
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     selectedTmplate = template.CreateDefault();
             }
-                // Check if Barcode and Template has the same length
+                /* Check if Barcode and Template has the same length */
                 Boolean templOK = checkBcTemplate (bcString, selectedTmplate);
 
                 if (templOK == true) {
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                     bcContentList = interpretBC(bcString, selectedTmplate);
                 }
                 else {
-                    //noTemplateMatch();
+                    /* noTemplateMatch(); */
                     errorText = findViewById(R.id.errorView);
                     errorText.setVisibility(View.VISIBLE);
                     errorText.setText(R.string.noTemplate_match);
@@ -235,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
     }*/
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
+
+        /* check if the length of the bcString is equal to the length defined with the template */
         String bcString = bcStr;
         ArrayList<BcItem> template = templ;
 
@@ -252,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
+
+        /* read the values out of the bcString and fill up bcContentList */
         String bcString = bcStr;
         ArrayList<BcItem> template = templ;
         ArrayList<BcContent> bcContentList = new ArrayList<>();
@@ -275,13 +279,13 @@ public class MainActivity extends AppCompatActivity {
             String value2 = null;
 
             if (contentX.contentDim.equals("mm")) {
-                // String mit Dezimalpunkt ergänzen und führende 0 löschen
+                /* add a decimal point to the strings with dimension ""mm" and delete leading 0 */
                 value2 = value.substring(0,3) + "." + value.substring(3);
 
                 if (value2.charAt(0) == '0') {
                     value2 = value2.substring(1,5);
 
-                    // ev. 2te führende 0 entfernen
+                    /* delete a second leading 0 */
                     if (value2.charAt(0) == '0') {
                         value2 = value2.substring(1,4);
                     }

@@ -1,5 +1,5 @@
 package com.example.barcode_interpreter;
-// Template Struktur
+/* Template structure */
 
 import java.util.ArrayList;
 

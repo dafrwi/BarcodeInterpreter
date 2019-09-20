@@ -1,5 +1,5 @@
 package com.example.barcode_interpreter;
-// BC Inhalts Struktur
+/* Barcode Content structure */
 
 public class BcContent {
     String contentName;

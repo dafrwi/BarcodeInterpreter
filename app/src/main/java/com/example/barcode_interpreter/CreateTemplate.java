@@ -20,12 +20,12 @@ public class CreateTemplate {
         ArrayList<BcContent> bcContentList = new ArrayList<>();
         BcContent contentX = new BcContent("","","");
 
-       // bcContentList.add(contentX);
-
         return bcContentList;
     }
 
     protected ArrayList<BcItem> CreateDefault() {
+
+        /* Default - Template */
         ArrayList<BcItem> template_default = new ArrayList<>();
         BcItem item;
 
@@ -42,6 +42,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateSilhouet() {
+
+        /* Template Combined Code for Project Silhouet (BookLine-VBA-Vareo-InfiniTrim) */
         ArrayList<BcItem> template_Silhouet = new ArrayList<>();
         BcItem item;
 
@@ -70,6 +72,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateVareo() {
+
+        /* Template for Vareo Binder */
         ArrayList<BcItem> template_Vareo = new ArrayList<>();
         BcItem item;
 
@@ -84,6 +88,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateInfiniTrim() {
+
+        /* Template for InfiniTrim Trimmer */
         ArrayList<BcItem> template_InfiniTrim = new ArrayList<>();
         BcItem item;
 
@@ -98,6 +104,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateExaktaVareo() {
+
+        /* Default Combined Code for Project Exakta (BookLine-Vareo) */
         ArrayList<BcItem> template_ExaktaVareo = new ArrayList<>();
         BcItem item;
 
@@ -120,6 +128,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateExaktaVareoCover() {
+
+        /* Template for Project Exakta (Vareo-Cover)*/
         ArrayList<BcItem> template_ExaktaVareoCover = new ArrayList<>();
         BcItem item;
 
@@ -136,6 +146,8 @@ public class CreateTemplate {
     }
 
     protected ArrayList<BcItem> CreateExaktaPrimera() {
+
+        /* Template for Project Exakta (Stitcher-PrimeraMC)*/
         ArrayList<BcItem> template_ExaktaPrimera = new ArrayList<>();
         BcItem item;
 
