@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setPrompt("SCAN");
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
+
+        /*setAdapter();
+        res = findViewById(R.id.result_list);
+        res.setAdapter(adapter); */
     }
 
     @Override
@@ -89,12 +93,21 @@ public class MainActivity extends AppCompatActivity {
 
         if (Result != null) {
             if (Result.getContents() == null) {
+                bcContentList.clear();
+
                 errorText.setVisibility(View.VISIBLE);
                 errorText.setText(R.string.scan_cancelled);
+
+
             } else {
                 scanResult.setText("Scanned Code: " + Result.getContents());
                 bcString = Result.getContents();
+                bcContentList.clear();
+
             }
+            res = findViewById(R.id.result_list);
+            res.setAdapter(adapter);
+            
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -136,66 +149,15 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     /* noTemplateMatch(); */
+                    bcContentList.clear();
                     errorText = findViewById(R.id.errorView);
                     errorText.setVisibility(View.VISIBLE);
                     errorText.setText(R.string.noTemplate_match);
-                    bcContentList.clear();
                 }
         }
 
-       /* if (bcString != null) {
-
-            // Wenn der Code gescannt wurde wird hier weitergefahren
-            if (spinner.getSelectedItem().toString().equals("Silhouet")) {
-                silhouet = template.CreateSilhouet();
-
-                // Check if Barcode and Template has the same length
-                Boolean templOK = checkBcTemplate (bcString, silhouet);
-
-                if (templOK == true) {
-                    errorText.setVisibility(View.INVISIBLE);
-                    bcContentList = interpretBC(bcString, silhouet);
-                }
-                else {
-                    noTemplateMatch();
-                    bcContentList.clear();
-                }
-            }
-
-            if (spinner.getSelectedItem().toString().equals("InfiniTrim")) {
-                infiniTrim = template.CreateInfiniTrim();
-
-                // Check if Barcode and Template has the same length
-                Boolean templOK = checkBcTemplate (bcString, infiniTrim);
-
-                if (templOK == true) {
-                    errorText.setVisibility(View.INVISIBLE);
-                    bcContentList = interpretBC(bcString, infiniTrim);
-                }
-                else {
-                    noTemplateMatch();
-                    bcContentList.clear();
-                }
-            }
-
-            if (spinner.getSelectedItem().toString().equals("Vareo")) {
-                vareo = template.CreateVareo();
-
-                // Check if Barcode and Template has the same length
-                Boolean templOK = checkBcTemplate (bcString, vareo);
-
-                if (templOK == true) {
-                    errorText.setVisibility(View.INVISIBLE);
-                    bcContentList = interpretBC(bcString, vareo);
-                }
-                else {
-                    noTemplateMatch();
-                    bcContentList.clear();
-                }
-            }
-        } */
-
         else {
+            bcContentList.clear();
             errorText = findViewById(R.id.errorView);
             errorText.setVisibility(View.VISIBLE);
             errorText.setText(R.string.noCode_scanned);
@@ -227,12 +189,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-
- /*   private void noTemplateMatch () {
-         errorText = findViewById(R.id.errorView);
-         errorText.setVisibility(View.VISIBLE);
-         errorText.setText(R.string.noTemplate_match);
-    }*/
 
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
 
