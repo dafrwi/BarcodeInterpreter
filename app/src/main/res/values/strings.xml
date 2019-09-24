@@ -12,9 +12,7 @@
     <string name="noCode_scanned">es wurde kein Code gescannt</string>
     <string name="noTemplate_match">es handelt sich um einen Code, der nicht mit diesem Template übereinstimmt</string>
 
-
-
-
+    <!-- array for the spinner -->
     <string-array name="code_templates">
         <item>default</item>
         <item>Vareo</item>
