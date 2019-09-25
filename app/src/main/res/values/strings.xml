@@ -4,7 +4,7 @@
     <string name="scan">scan</string>
     <string name="interpret">Interpret</string>
     <string name="code_template">Code-Template:</string>
-    <string name="scanned_code">scanned code:</string>
+    <string name="scanned_code">Scanned code:</string>
     <string name="error_text">errorText</string>
 
     <!-- error strings -->

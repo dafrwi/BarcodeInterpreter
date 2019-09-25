@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         /* create an initial Template that it is not NULL */
         bcContentList = new CreateTemplate().CreateInitial();
 
-        //
         spinner = findViewById(R.id.spinner);
         /* Create an ArrayAdapter using the string array and a default spinner layout */
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -78,10 +77,6 @@ public class MainActivity extends AppCompatActivity {
         intentIntegrator.setPrompt("SCAN");
         intentIntegrator.setBarcodeImageEnabled(false);
         intentIntegrator.initiateScan();
-
-        /*setAdapter();
-        res = findViewById(R.id.result_list);
-        res.setAdapter(adapter); */
     }
 
     @Override
@@ -99,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             } else {
-                scanResult.setText("Scanned Code: " + Result.getContents());
+                scanResult.setText("Scanned code: " + Result.getContents());
                 bcString = Result.getContents();
                 bcContentList.clear();
 
@@ -116,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* check if a barcode is scanned */
         if (bcString != null) {
-            String select = spinner.getSelectedItem().toString();
+
             switch(spinner.getSelectedItem().toString()) {
                 case "Silhouet":
                     selectedTmplate = template.CreateSilhouet();
@@ -142,12 +137,11 @@ public class MainActivity extends AppCompatActivity {
                 /* Check if Barcode and Template has the same length */
                 Boolean templOK = checkBcTemplate (bcString, selectedTmplate);
 
-                if (templOK == true) {
+                if (templOK) {
                     errorText.setVisibility(View.INVISIBLE);
                     bcContentList = interpretBC(bcString, selectedTmplate);
                 }
                 else {
-                    /* noTemplateMatch(); */
                     bcContentList.clear();
                     errorText = findViewById(R.id.errorView);
                     errorText.setVisibility(View.VISIBLE);
@@ -162,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
             errorText.setText(R.string.noCode_scanned);
         }
 
-        //adapter.notifyDataSetChanged();
         setAdapter();
         res = findViewById(R.id.result_list);
         res.setAdapter(adapter);
@@ -192,17 +185,15 @@ public class MainActivity extends AppCompatActivity {
     private Boolean checkBcTemplate (String bcStr, ArrayList<BcItem> templ) {
 
         /* check if the length of the bcString is equal to the length defined with the template */
-        String bcString = bcStr;
-        ArrayList<BcItem> template = templ;
 
         Boolean checkOK= false;
 
-        Integer anzItem = template.size();
+        Integer anzItem = templ.size();
         BcItem lastItem = templ.get(anzItem-1);
         int bclength = bcStr.length();
         int templength = (lastItem.itemStartBit + lastItem.itemAnzStellen - 1);
 
-        if (bcStr.length() == (lastItem.itemStartBit + lastItem.itemAnzStellen - 1)) {
+        if (bclength == templength) {
             checkOK = true;
         }
         return checkOK;
@@ -211,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<BcContent> interpretBC(String bcStr, ArrayList<BcItem> templ) {
 
         /* read the values out of the bcString and fill up bcContentList */
-        String bcString = bcStr;
+        bcString = bcStr;
         ArrayList<BcItem> template = templ;
         ArrayList<BcContent> bcContentList = new ArrayList<>();
 
